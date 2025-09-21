@@ -444,7 +444,7 @@ Message: ${form.message}`;
     return (
         <div>
             <div
-                className="min-h-screen text-slate-900 dark:text-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,1),rgba(246,231,216,0.6))] dark:bg-[radial-gradient(ellipse_at_top,rgba(11,16,32,1),rgba(15,118,110,0.25))]">
+                className="min-h-screen text-slate-900 dark:text-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,.7),rgba(246,231,216,0))] dark:bg-[radial-gradient(ellipse_at_top,rgba(11,16,32,1),rgba(15,118,110,0.25))]">
                 {/* TOP DECOR — sky (light) / stars (dark) + full-bleed mountains */}
                 <div className="pointer-events-none select-none relative overflow-hidden">
                     {/* reserve height */}
@@ -535,7 +535,7 @@ Message: ${form.message}`;
                     </div>
 
                     <div className="max-w-7xl mx-auto px-4 pt-16 pb-20 md:pt-24 md:pb-28">
-                        <div className="max-w-3xl">
+                        <div className="max-w-3xl px-5 py-1 pb-6 pr-0 bg-[#fff4eb5c] rounded-2xl dark:bg-[#001f1d00]">
                             <h1
                                 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight"
                                 style={{textShadow: "0 2px 8px rgba(0,0,0,0.35)"}}
