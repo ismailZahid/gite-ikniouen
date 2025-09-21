@@ -6,12 +6,14 @@ import { SUITES } from './suites.js';
 /*******************
  * THEME + PALETTE *
  *******************/
+
 const PALETTE = {
-  sand: "#F6E7D8",
-  terracotta: "#C05621",
-  palm: "#0F766E",
-  night: "#0B1020",
-  gold: "#B45309",
+  sky:   "#2AE3FE", // bright Anti-Atlas sky
+  earth: "#9A8B67", // sunlit soil/terrace
+  rock:  "#5E5433", // warm mountain rock
+  oasis: "#2C581F", // deep orchard green
+  oasisLight: "#5C9E2B", // lighter leaf accent
+  night: "#14181A"  // deep shade
 };
 
 /*******************
@@ -168,14 +170,19 @@ const CURRENCY = "MAD";
 /*******************
  * ICONS (inline SVG)
  *******************/
+// Amazigh "ⵣ" (Yaz) — stroke version
 function IconYaz({ className }) {
-  // Stylized Amazigh ⵣ
   return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden>
-      <path d="M12 10h40M12 54h40M12 10c12 8 20 16 20 22s-8 14-20 22M52 10C40 18 32 26 32 32s8 14 20 22" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
-    </svg>
+      <svg viewBox="0 0 64 64" className={className} aria-hidden>
+        <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10 11 Q32 38 49 22"></path>
+          <path d="M10 46 Q32 26 54 50"></path>
+          <path d="M32 8 V56" />
+        </g>
+      </svg>
   );
 }
+
 function IconTagine({ className }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden>
@@ -199,13 +206,33 @@ function IconStar({ className }) {
     </svg>
   );
 }
+// Replace your IconDunes with this mountains version
 function IconDunes({ className }) {
   return (
-    <svg viewBox="0 0 200 60" className={className} aria-hidden>
-      <path d="M0 50c30-10 50-30 90-20 40 10 40 20 70 20 20 0 30-5 40-10v20H0V50z" fill="currentColor" />
-    </svg>
+      <svg viewBox="0 0 200 60" className={className} aria-hidden>
+        {/* Back ridge (lighter) */}
+        <path
+            d="M0 52
+           L15 44 L28 50 L42 41 L56 50
+           L72 38 L86 50 L104 40 L122 50
+           L140 43 L158 50 L176 46 L200 50
+           V60 H0 Z"
+            fill="currentColor"
+            opacity="0.55"
+        />
+        {/* Front ridge */}
+        <path
+            d="M0 56
+           L12 48 L24 55 L38 46 L52 55
+           L68 42 L84 55 L102 45 L120 56
+           L140 47 L160 55 L178 50 L200 56
+           V60 H0 Z"
+            fill="currentColor"
+        />
+      </svg>
   );
 }
+
 function IconGuests(props) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden className={props.className}>
@@ -243,7 +270,11 @@ function Stat({ icon, label, value }) {
   );
 }
 function Chip({ children, tone = "emerald" }) {
-  const toneCls = tone === "gold" ? "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-200 dark:border-amber-800" : "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-200 dark:border-emerald-800";
+// Chip tone="gold" → make it “earth”
+  const toneCls =
+      tone === "gold"
+          ? "bg-[#E7E0CF] text-[#5E5433] border-[#D7CCB0] dark:bg-[#1C2C19]/40 dark:text-[#C9C39E] dark:border-[#1C2C19]"
+          : "bg-[#E0F1DA] text-[#2C581F] border-[#B9D6AE] dark:bg-[#1C2C19]/40 dark:text-[#5C9E2B] dark:border-[#1C2C19]";
   return <span className={`px-2 py-1 text-xs rounded-full border ${toneCls}`}>{children}</span>;
 }
 function SectionTitle({ kicker, title, subtitle }) {
@@ -302,7 +333,7 @@ Message: ${form.message}`;
       <div className="min-h-screen text-slate-900 dark:text-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,1),rgba(246,231,216,0.6))] dark:bg-[radial-gradient(ellipse_at_top,rgba(11,16,32,1),rgba(15,118,110,0.25))]">
         {/* TOP DECOR — desert dunes + stars */}
         <div className="pointer-events-none select-none relative h-12">
-          <IconDunes className="absolute inset-x-0 -top-2 h-14 w-full text-amber-200 dark:text-emerald-900" />
+          <IconDunes className="absolute inset-x-0 -top-2 h-14 w-full text-[#9A8B67]/70 dark:text-[#5E5433]/70" />
           <div className="absolute right-6 top-1 hidden md:flex gap-1 text-amber-400 opacity-70 dark:text-emerald-300">
             <IconStar className="h-3 w-3" /><IconStar className="h-2 w-2" /><IconStar className="h-2.5 w-2.5" />
           </div>
@@ -347,13 +378,29 @@ Message: ${form.message}`;
 
         {/* HERO */}
         <section id="top" className="relative overflow-hidden">
+          {/* Bg from sky → earth */}
+          <div
+              aria-hidden
+              className="absolute inset-0 -z-10"
+              style={{
+                backgroundImage: `radial-gradient(ellipse at top, ${PALETTE.sky} 0%, ${PALETTE.earth}33 60%)`
+                // '33' = ~20% opacity
+              }}
+          />
+          {/* dark mode */}
+          <div
+              aria-hidden
+              className="absolute inset-0 -z-10 hidden dark:block"
+              style={{
+                backgroundImage: `radial-gradient(ellipse at top, ${PALETTE.night} 0%, ${PALETTE.oasis}40 60%)`
+              }}
+          />
           {/* Amazigh zellige pattern */}
           <svg aria-hidden className="absolute inset-0 -z-10 opacity-20 dark:opacity-15 w-full h-full" viewBox="0 0 600 400">
             <defs>
               <pattern id="zellige" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width="40" height="40" fill={PALETTE.sand} />
-                <path d="M0 20H40M20 0V40" stroke={PALETTE.gold} strokeWidth="0.5" opacity=".4" />
-                <circle cx="20" cy="20" r="6" fill={PALETTE.terracotta} opacity=".35" />
+                <path d="M0 20H40M20 0V40" stroke={PALETTE.sky} strokeWidth="0.5" opacity=".45" />
+                <circle cx="20" cy="20" r="6" fill={PALETTE.oasisLight} opacity=".45" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#zellige)" />
@@ -391,14 +438,6 @@ Message: ${form.message}`;
           <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <SectionTitle title={t.about.title} subtitle={t.about.body} />
-              <ul className="mt-6 space-y-2 text-slate-700 dark:text-slate-300">
-                {t.about.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-amber-700 dark:bg-emerald-400"></span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {ABOUT_CARDS.map((it, i) => (
