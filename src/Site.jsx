@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { GALLERY } from './gallery'
+import { GALLERY } from './gallery';
+import { ABOUT_CARDS } from './about-cards.js';
+import { SUITES } from './suites.js';
 
 /*******************
  * THEME + PALETTE *
@@ -162,13 +164,6 @@ const LANG = {
 
 const CURRENCY = "MAD";
 
-const SUITES = [
-  { id: 1, name: "Family Suite A", pax: 4, size: 22, rate: 600 },
-  { id: 2, name: "Family Suite B", pax: 4, size: 22, rate: 600 },
-  { id: 3, name: "Atlas Stone Room", pax: 3, size: 20, rate: 580 },
-  { id: 4, name: "Garden View Room", pax: 2, size: 18, rate: 550 },
-  { id: 5, name: "Oasis Triple", pax: 3, size: 19, rate: 570 },
-];
 
 /*******************
  * ICONS (inline SVG)
@@ -406,12 +401,27 @@ Message: ${form.message}`;
               </ul>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {["Patio with tamarisk shade", "Tadelakt walls", "Clay oven", "Palm orchard"].map((label, i) => (
-                <figure key={i} className="group relative overflow-hidden rounded-2xl border border-amber-200 dark:border-emerald-900 aspect-[4/3] bg-gradient-to-br from-amber-50 to-sand-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,.6),transparent_60%)]" />
-                  <IconPalm className="h-10 w-10 text-amber-700 dark:text-emerald-300 opacity-60" />
-                  <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-sm bg-white/60 dark:bg-black/30 backdrop-blur opacity-0 group-hover:opacity-100 transition">{label}</figcaption>
-                </figure>
+              {ABOUT_CARDS.map((it, i) => (
+                  <figure
+                      key={i}
+                      className="group relative overflow-hidden rounded-2xl border border-amber-200 dark:border-emerald-900 aspect-[4/3] bg-amber-50 dark:bg-slate-900"
+                  >
+                    {/* Photo */}
+                    <img
+                        src={it.src}
+                        alt={it.label}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover"
+                    />
+
+                    {/* Soft highlight overlay (optional, like before) */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,.35),transparent_60%)] mix-blend-soft-light pointer-events-none" />
+
+                    {/* Caption on hover */}
+                    <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-sm bg-white/70 dark:bg-black/30 backdrop-blur opacity-0 group-hover:opacity-100 transition">
+                      {it.label}
+                    </figcaption>
+                  </figure>
               ))}
             </div>
           </div>
@@ -424,8 +434,14 @@ Message: ${form.message}`;
             <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {suites.map((s) => (
                 <article key={s.id} className="rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/80 dark:bg-black/40 backdrop-blur p-5 shadow-sm hover:shadow-md transition">
-                  <div className="aspect-[4/3] rounded-xl bg-gradient-to-t from-amber-100 to-amber-50 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center text-amber-700 dark:text-emerald-300">
-                    <IconYaz className="h-8 w-8 opacity-60" />
+                  <div className="aspect-[4/3] overflow-hidden rounded-xl">
+                    <img
+                        src={s.img}
+                        alt={s.alt}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
                   </div>
                   <h3 className="mt-4 text-lg font-bold">{s.name}</h3>
                   <div className="mt-2 flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
