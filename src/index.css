@@ -3,3 +3,18 @@
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
+
+@keyframes kb-pan {
+    0%   { transform: scale(1) translate3d(0, 0, 0); }
+    100% { transform: scale(1.12) translate3d(2%, -2%, 0); }
+}
+
+.kb-kenburns {
+    animation: kb-pan 8s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+    .kb-kenburns { animation: none; }
+}
