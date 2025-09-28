@@ -738,8 +738,8 @@ Message: ${form.message}`;
                 {/* FOOTER */}
                 <footer className="py-10">
                     <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div className="text-sm text-slate-700 dark:text-slate-400">© {new Date().getFullYear()} Gite Ikniouen. {LANG[lang].footer.rights}</div>
-                        <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400">
+                        <div className="text-sm text-slate-700 dark:text-slate-50">© {new Date().getFullYear()} Gite Ikniouen. {LANG[lang].footer.rights}</div>
+                        <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-50">
                             <IconYaz className="h-4 w-4 text-amber-700 dark:text-emerald-300" /> {LANG[lang].footer.made}
                         </div>
                     </div>
