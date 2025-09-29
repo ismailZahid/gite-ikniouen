@@ -724,7 +724,10 @@ Message: ${form.message}`;
                                 <select
                                     className="rounded-lg border border-amber-300 dark:border-emerald-700 bg-transparent px-2 py-1 text-sm flex-1"
                                     value={lang}
-                                    onChange={(e) => setLang(e.target.value)}
+                                    onChange={(e) => {
+                                        setLang(e.target.value);
+                                        setMenuOpen(false);
+                                    }}
                                     aria-label="Select language"
                                 >
                                     <option value="en" className="dark:text-zinc-800">EN</option>
@@ -733,7 +736,10 @@ Message: ${form.message}`;
                                 </select>
                                 <button
                                     aria-label="Toggle theme"
-                                    onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+                                    onClick={() => {
+                                        setTheme((t) => (t === "dark" ? "light" : "dark"));
+                                        setMenuOpen(false);
+                                    }}
                                     className="rounded-lg border border-amber-300 dark:border-emerald-700 px-2 py-1 text-xs"
                                 >
                                     {theme === "dark" ? "☾" : "☀"}
