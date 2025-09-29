@@ -828,7 +828,7 @@ Message: ${form.message}`;
                                     <div className="mt-3 flex items-center justify-between">
                                         <div className="text-xl font-extrabold">
                                             from {BAR.low} {CURRENCY}
-                                            <span className="text-sm font-medium text-slate-500"> / night BB</span>
+                                            <span className="text-sm font-medium text-slate-800"> / night BB</span>
                                         </div>
                                         <a href="#rates"
                                            className="text-amber-700 dark:text-emerald-300 font-semibold hover:underline">
@@ -1089,7 +1089,7 @@ Message: ${form.message}`;
                                 </button>
                             ))}
                         </div>
-                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-400">{SEASONS[season].months}</div>
+                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-800">{SEASONS[season].months}</div>
 
                         {/* BAR cards */}
                         <div className="mt-8 grid md:grid-cols-3 gap-6">
@@ -1102,11 +1102,11 @@ Message: ${form.message}`;
                                             {SEASONS[k].label}
                                         </div>
                                         <div
-                                            className="mt-1 text-xs text-slate-500 dark:text-slate-400">{SEASONS[k].months}</div>
+                                            className="mt-1 text-xs text-slate-800 dark:text-slate-900">{SEASONS[k].months}</div>
                                         <div className="mt-5 text-3xl font-extrabold">
-                                            {fmtMAD(BAR[k])} <span className="text-sm font-medium text-slate-500">/ night (BB)</span>
+                                            {fmtMAD(BAR[k])} <span className="text-sm font-medium text-slate-800">/ night (BB)</span>
                                         </div>
-                                        <div className="mt-3 text-xs text-slate-600 dark:text-slate-400">Base rate for 2
+                                        <div className="mt-3 text-xs text-slate-600 dark:text-slate-900">Base rate for 2
                                             guests
                                         </div>
                                     </div>
@@ -1165,7 +1165,7 @@ Message: ${form.message}`;
                                                 <div className="mt-4 flex items-baseline gap-2">
                                                     <div className="text-2xl font-extrabold">{fmtMAD(price)}</div>
                                                     <div
-                                                        className="text-xs text-slate-500 dark:text-slate-400">({SEASONS[season].label})
+                                                        className="text-xs text-slate-800 dark:text-slate-900">({SEASONS[season].label})
                                                     </div>
                                                 </div>
                                                 <a href="#book"
