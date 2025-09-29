@@ -342,6 +342,17 @@ function Stat({ icon, label, value }) {
     );
 }
 
+
+function Chip({children, tone = "emerald"}) {
+// Chip tone="gold" → make it “earth”
+    const toneCls =
+        tone === "gold"
+            ? "bg-[#E7E0CF] text-[#5E5433] border-[#D7CCB0] dark:bg-[#1C2C19]/40 dark:text-[#C9C39E] dark:border-[#1C2C19]"
+            : "bg-[#E0F1DA] text-[#2C581F] border-[#B9D6AE] dark:bg-[#1C2C19]/40 dark:text-[#5C9E2B] dark:border-[#1C2C19]";
+    return <span className={`px-2 py-1 text-xs rounded-full border ${toneCls}`}>{children}</span>;
+}
+
+
 function SectionTitle({ kicker, title, subtitle }) {
     return (
         <div className="max-w-3xl mx-auto text-center">
@@ -352,6 +363,49 @@ function SectionTitle({ kicker, title, subtitle }) {
     );
 }
 
+/* ---------- small helpers ---------- */
+function fmtMAD(v) {
+    return typeof v === "number" ? `${v.toLocaleString("en-US")} MAD` : v;
+}
+
+/* ---------- extra inline icons for Experiences ---------- */
+function IconSteam({ className }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} aria-hidden>
+            <path d="M7 18c2-2 0-3 2-5 2-2 0-3 2-5" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+            <path d="M12 18c2-2 0-3 2-5 2-2 0-3 2-5" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        </svg>
+    );
+}
+function IconHike({ className }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} aria-hidden>
+            <path d="M3 18c4-3 8-5 13-6M12 11l2 3 3 2" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+            <circle cx="15.5" cy="5.5" r="1.5" fill="currentColor"/>
+            <path d="M11 9l-3 3 1 5" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        </svg>
+    );
+}
+function IconStars5({ className }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} aria-hidden>
+            <path d="M6 8l1.2 2.7L10 12l-2.2 1.3L6 16l-1.3-2.7L2 12l2.7-1.3L6 8Z" fill="currentColor" opacity=".9"/>
+            <path d="M12 4l1.4 3.2L17 8l-3.1 1.8L12 13l-1.9-3.2L7 8l3.6-.8L12 4Z" fill="currentColor" opacity=".7"/>
+            <path d="M15.5 10.5l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9.9-2Z" fill="currentColor" opacity=".6"/>
+        </svg>
+    );
+}
+function IconPottery({ className }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} aria-hidden>
+            <path d="M9 4h6c0 2 1 3 2 4-1 5-2 7-5 7s-4-2-5-7c1-1 2-2 2-4Z" fill="currentColor" opacity=".85"/>
+            <path d="M6 20h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+        </svg>
+    );
+}
+
+const DIRECT_BONUS = "Book direct = hammam offered (80 MAD/person value)";
+
 export default function Site() {
     /*******************
      * LANGUAGE
@@ -359,6 +413,8 @@ export default function Site() {
     const [lang, setLang] = useState("en");
     const t = useMemo(() => LANG[lang], [lang]);
 
+    const [season, setSeason] = useState("shoulder"); // default middle season
+    const seasonKeys = ["low", "shoulder", "high"];
     /*******************
      * THEME
      *******************/
@@ -530,19 +586,47 @@ Message: ${form.message}`;
                 </section>
 
                 {/* EXPERIENCES */}
-                <section id="experiences" className="py-20">
+                <section id="experiences" className="relative py-20">
+                    {/* soft background pattern */}
+                    <div
+                        aria-hidden
+                        className="absolute inset-0 -z-10 opacity-[.65] dark:opacity-40"
+                        style={{
+                            backgroundImage:
+                                "radial-gradient(60% 90% at 70% -10%, #EAF7FF 0%, transparent 60%), radial-gradient(50% 60% at 10% 30%, #FFF7EC 0%, transparent 60%)",
+                        }}
+                    />
                     <div className="max-w-7xl mx-auto px-4">
                         <SectionTitle title={t.experiences.title} />
+
                         <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {t.experiences.items.map((it, i) => (
-                                <div key={i} className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-6 bg-white/80 dark:bg-black/40">
-                                    <div className="flex items-center gap-3">
-                                        <IconTagine className="h-5 w-5 text-amber-700 dark:text-emerald-300" />
-                                        <h3 className="font-bold">{it.title}</h3>
+                            {t.experiences.items.map((it, i) => {
+                                const icon =
+                                    i === 0 ? <IconSteam className="h-6 w-6" /> :
+                                        i === 1 ? <IconTagine className="h-6 w-6" /> :
+                                            i === 2 ? <IconHike className="h-6 w-6" /> :
+                                                i === 3 ? <IconStars5 className="h-6 w-6" /> :
+                                                    <IconPottery className="h-6 w-6" />;
+                                return (
+                                    <div
+                                        key={i}
+                                        className="group rounded-3xl p-[1px] bg-gradient-to-br from-[#9EE5FF33] via-[#E7E0CF55] to-[#5C9E2B33] hover:from-[#9EE5FF66] hover:via-[#E7E0CF88] hover:to-[#5C9E2B66] transition"
+                                    >
+                                        <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 h-full shadow-sm group-hover:shadow-md transition">
+                                            <div className="flex items-center gap-3">
+                                                <div className="rounded-xl p-2 text-[#2C581F] dark:text-[#5C9E2B] bg-[#E0F1DA]/70 dark:bg-[#1C2C19]/50 ring-1 ring-[#B9D6AE]/60 dark:ring-[#1C2C19]">
+                                                    {icon}
+                                                </div>
+                                                <h3 className="font-bold">{it.title}</h3>
+                                            </div>
+                                            <p className="mt-2 text-slate-700 dark:text-slate-300">{it.text}</p>
+                                            <div className="mt-4">
+                                                <Chip>{/* small tag hint for vibe */}slow travel</Chip>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p className="mt-2 text-slate-700 dark:text-slate-300">{it.text}</p>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
@@ -639,52 +723,84 @@ Message: ${form.message}`;
                         </form>
                     </div>
                 </section>
+
                 {/* RATES & PACKS */}
-                <section id="rates" className="py-20">
+                <section id="rates" className="relative py-20">
+                    {/* zellige-ish background wash */}
+                    <div
+                        aria-hidden
+                        className="absolute inset-0 -z-10"
+                        style={{
+                            backgroundImage:
+                                "radial-gradient(60% 80% at 20% 0%, rgba(92,158,43,0.08), transparent 60%), radial-gradient(60% 80% at 80% 20%, rgba(158,229,255,0.15), transparent 60%)",
+                        }}
+                    />
                     <div className="max-w-7xl mx-auto px-4">
                         <SectionTitle
                             kicker="Pricing"
                             title="Rates & Packs"
-                            subtitle="All room rates include breakfast (BB). Seasonal BAR and ready-to-sell packs."
+                            subtitle="All room rates include breakfast (BB). Choose a season to preview prices."
                         />
 
-                        {/* Seasons grid */}
-                        <div className="mt-10 grid md:grid-cols-3 gap-6">
-                            {["low","shoulder","high"].map((key) => (
-                                <div key={key} className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-6 bg-white/80 dark:bg-black/40">
-                                    <div className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                                        {SEASONS[key].label}
-                                    </div>
-                                    <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{SEASONS[key].months}</div>
-                                    <div className="mt-4 text-3xl font-extrabold">
-                                        {BAR[key]} {CURRENCY}
-                                        <span className="text-sm font-medium text-slate-500"> / night (BB)</span>
+                        {/* season toggle */}
+                        <div className="mt-6 inline-flex rounded-2xl border border-amber-200 dark:border-emerald-900 overflow-hidden bg-white/70 dark:bg-slate-900/40 backdrop-blur">
+                            {seasonKeys.map((k) => (
+                                <button
+                                    key={k}
+                                    onClick={() => setSeason(k)}
+                                    className={`px-4 py-2 text-sm font-medium transition
+            ${season === k
+                                        ? "bg-[#E7E0CF] text-[#5E5433] dark:bg-[#1C2C19]/50 dark:text-[#C9C39E]"
+                                        : "text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-white/10"}`}
+                                >
+                                    {SEASONS[k].label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-400">{SEASONS[season].months}</div>
+
+                        {/* BAR cards */}
+                        <div className="mt-8 grid md:grid-cols-3 gap-6">
+                            {seasonKeys.map((k) => (
+                                <div key={k} className={`rounded-3xl p-[1px] ${season===k ? "bg-gradient-to-br from-[#9EE5FF66] via-[#E7E0CF99] to-[#5C9E2B66]" : "bg-gradient-to-br from-transparent via-[#E7E0CF55] to-transparent"}`}>
+                                    <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 h-full">
+                                        <div className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                                            {SEASONS[k].label}
+                                        </div>
+                                        <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{SEASONS[k].months}</div>
+                                        <div className="mt-5 text-3xl font-extrabold">
+                                            {fmtMAD(BAR[k])} <span className="text-sm font-medium text-slate-500">/ night (BB)</span>
+                                        </div>
+                                        <div className="mt-3 text-xs text-slate-600 dark:text-slate-400">Base rate for 2 guests</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Rules */}
-                        <div className="mt-8 grid md:grid-cols-2 gap-6">
-                            <div className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-6 bg-white/80 dark:bg-black/40">
+                        {/* direct bonus */}
+                        <div className="mt-6">
+                            <Chip tone="gold">{DIRECT_BONUS}</Chip>
+                        </div>
+
+                        {/* rules & policies */}
+                        <div className="mt-10 grid md:grid-cols-2 gap-6">
+                            <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 border border-amber-200 dark:border-emerald-900">
                                 <h3 className="font-bold text-lg">Rules</h3>
                                 <ul className="mt-3 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                                     {RATE_RULES.map((r, i) => (
-                                        <li key={i} className="flex items-center gap-2">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300 mt-1"></span>
+                                        <li key={i} className="flex items-start gap-2">
+                                            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300"></span>
                                             <span><strong>{r.k}:</strong> {r.v}</span>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-
-                            {/* Policies */}
-                            <div className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-6 bg-white/80 dark:bg-black/40">
+                            <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 border border-amber-200 dark:border-emerald-900">
                                 <h3 className="font-bold text-lg">Policies & extras</h3>
                                 <ul className="mt-3 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                                     {POLICIES.map((p, i) => (
-                                        <li key={i} className="flex items-center gap-2">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300 mt-1"></span>
+                                        <li key={i} className="flex items-start gap-2">
+                                            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300"></span>
                                             <span>{p}</span>
                                         </li>
                                     ))}
@@ -692,40 +808,37 @@ Message: ${form.message}`;
                             </div>
                         </div>
 
-                        {/* Packs */}
+                        {/* packs */}
                         <div className="mt-12">
                             <h3 className="font-bold text-xl mb-4">Packs</h3>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {PACKS.map((p, i) => (
-                                    <article key={i} className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-6 bg-white/80 dark:bg-black/40">
-                                        <h4 className="font-bold">{p.title}</h4>
-                                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{p.inc}</p>
-                                        <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
-                                            <div>
-                                                <div className="text-xs text-slate-500 dark:text-slate-400">Low</div>
-                                                <div className="font-semibold">{p.low} {typeof p.low==="number" ? CURRENCY : ""}</div>
+                                {PACKS.map((p, i) => {
+                                    const price = p[season];
+                                    return (
+                                        <article key={i} className="group rounded-3xl p-[1px] bg-gradient-to-br from-[#9EE5FF33] via-[#E7E0CF55] to-[#5C9E2B33] hover:from-[#9EE5FF66] hover:via-[#E7E0CF88] hover:to-[#5C9E2B66] transition">
+                                            <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 h-full border border-transparent group-hover:border-white/30 dark:group-hover:border-white/10">
+                                                <h4 className="font-bold">{p.title}</h4>
+                                                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{p.inc}</p>
+                                                <div className="mt-4 flex items-baseline gap-2">
+                                                    <div className="text-2xl font-extrabold">{fmtMAD(price)}</div>
+                                                    <div className="text-xs text-slate-500 dark:text-slate-400">({SEASONS[season].label})</div>
+                                                </div>
+                                                <a href="#book" className="mt-4 inline-flex text-amber-700 dark:text-emerald-300 font-semibold hover:underline">
+                                                    Ask about this pack
+                                                </a>
                                             </div>
-                                            <div>
-                                                <div className="text-xs text-slate-500 dark:text-slate-400">Shoulder</div>
-                                                <div className="font-semibold">{p.shoulder} {typeof p.shoulder==="number" ? CURRENCY : ""}</div>
-                                            </div>
-                                            <div>
-                                                <div className="text-xs text-slate-500 dark:text-slate-400">High</div>
-                                                <div className="font-semibold">{p.high} {typeof p.high==="number" ? CURRENCY : ""}</div>
-                                            </div>
-                                        </div>
-                                        <a href="#book" className="mt-4 inline-flex text-amber-700 dark:text-emerald-300 font-semibold hover:underline">Ask about this pack</a>
-                                    </article>
-                                ))}
+                                        </article>
+                                    );
+                                })}
                             </div>
                         </div>
 
-                        {/* Services & Activities */}
+                        {/* upsells */}
                         <div className="mt-12">
                             <h3 className="font-bold text-xl mb-4">Services & activities (à la carte)</h3>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {UPSELLS.map((u, i) => (
-                                    <div key={i} className="rounded-2xl border border-amber-200 dark:border-emerald-900 p-5 bg-white/80 dark:bg-black/40 flex items-center justify-between">
+                                    <div key={i} className="flex items-center justify-between rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/80 dark:bg-black/40 px-4 py-3">
                                         <span className="text-slate-800 dark:text-slate-200">{u.t}</span>
                                         <span className="font-semibold text-amber-700 dark:text-emerald-300">{u.p}</span>
                                     </div>
@@ -734,6 +847,7 @@ Message: ${form.message}`;
                         </div>
                     </div>
                 </section>
+
 
                 {/* FOOTER */}
                 <footer className="py-10">
