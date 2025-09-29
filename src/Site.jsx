@@ -494,6 +494,9 @@ function IconPottery({className}) {
 const DIRECT_BONUS = "Book direct = hammam offered (80 MAD/person value)";
 
 export default function Site() {
+
+    const [menuOpen, setMenuOpen] = useState(false);
+
     /*******************
      * LANGUAGE
      *******************/
@@ -521,7 +524,9 @@ export default function Site() {
     /*******************
      * BOOKING FORM
      *******************/
-    const [form, setForm] = useState({name: "", email: "", in: "", out: "", guests: 2, message: ""});
+    const [form, setForm] = useState({
+        name: "", email: "", in: "", out: "", guests: 2, message: "", website: "", challenge: ""
+    });
     const [activeSection, setActiveSection] = useState(null);
 
     useEffect(() => {
@@ -558,17 +563,32 @@ export default function Site() {
         window.scrollTo({top: 0, behavior: "smooth"});
     }
 
-
     function submitBooking(e) {
         e.preventDefault();
+
+        // Honeypot check
+        if (form.website) {
+            console.warn("Bot submission blocked.");
+            return;
+        }
+
+        // Challenge check
+        if (form.challenge.trim().toLowerCase() !== "ikniouen") {
+            alert("Please type Ikniouen to confirm you are human.");
+            return;
+        }
+
+        const phone = PHONE;
         const msg = `Booking request — ${form.name}
 Email: ${form.email}
 Check-in: ${form.in}
 Check-out: ${form.out}
 Guests: ${form.guests}
 Message: ${form.message}`;
-        window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
     }
+
 
     return (
         <div>
@@ -590,20 +610,22 @@ Message: ${form.message}`;
                 </div>
 
                 {/* NAV */}
-                <header
-                    className="sticky top-0 z-50 backdrop-blur border-b border-amber-200/60 dark:border-emerald-900/60 bg-white/70 dark:bg-black/30">
+                <header className="sticky top-0 z-50 backdrop-blur border-b border-amber-200/60 dark:border-emerald-900/60 bg-white/70 dark:bg-black/30">
                     <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+                        {/* Logo */}
                         <a href="#top" className="flex items-center gap-2 font-bold text-xl">
-                            <IconYaz className="h-6 w-6 text-amber-700 dark:text-emerald-300"/> Gite Ikniouen
+                            <IconYaz className="h-6 w-6 text-amber-700 dark:text-emerald-300" /> Gite Ikniouen
                         </a>
+
+                        {/* Desktop nav */}
                         <nav className="hidden md:flex items-center gap-6 text-sm">
                             {[
-                                {id: "suites", label: t.nav.suites},
-                                {id: "experiences", label: t.nav.experiences},
-                                {id: "gallery", label: t.nav.gallery},
-                                {id: "location", label: t.nav.location},
-                                {id: "book", label: t.nav.book},
-                                {id: "rates", label: t.nav.rates},
+                                { id: "suites", label: t.nav.suites },
+                                { id: "experiences", label: t.nav.experiences },
+                                { id: "gallery", label: t.nav.gallery },
+                                { id: "location", label: t.nav.location },
+                                { id: "book", label: t.nav.book },
+                                { id: "rates", label: t.nav.rates },
                             ].map((link) => (
                                 <a
                                     key={link.id}
@@ -611,12 +633,15 @@ Message: ${form.message}`;
                                     className={`hover:text-amber-700 dark:hover:text-emerald-300 ${
                                         activeSection === link.id ? "font-semibold text-amber-700 dark:text-emerald-300" : ""
                                     }`}
+                                    onClick={() => setMenuOpen(false)} // also close menu if clicked
                                 >
                                     {link.label}
                                 </a>
                             ))}
                         </nav>
-                        <div className="flex items-center gap-2">
+
+                        {/* Language + Theme */}
+                        <div className="hidden md:flex items-center gap-2">
                             <select
                                 className="rounded-lg border border-amber-300 dark:border-emerald-700 bg-transparent px-2 py-1 text-sm"
                                 value={lang}
@@ -636,7 +661,64 @@ Message: ${form.message}`;
                                 {theme === "dark" ? "☾" : "☀"}
                             </button>
                         </div>
+
+                        {/* Mobile burger */}
+                        <button
+                            className="md:hidden p-2 rounded-lg border border-amber-300 dark:border-emerald-700"
+                            onClick={() => setMenuOpen((o) => !o)}
+                            aria-label="Toggle menu"
+                        >
+                            {/* simple burger icon */}
+                            <svg className="h-5 w-5" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none">
+                                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+                            </svg>
+                        </button>
                     </div>
+
+                    {/* Mobile menu panel */}
+                    {menuOpen && (
+                        <div className="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur border-t border-amber-200/60 dark:border-emerald-900/60 px-4 py-4 space-y-4">
+                            {[
+                                { id: "suites", label: t.nav.suites },
+                                { id: "experiences", label: t.nav.experiences },
+                                { id: "gallery", label: t.nav.gallery },
+                                { id: "location", label: t.nav.location },
+                                { id: "book", label: t.nav.book },
+                                { id: "rates", label: t.nav.rates },
+                            ].map((link) => (
+                                <a
+                                    key={link.id}
+                                    href={`#${link.id}`}
+                                    className={`block text-sm ${
+                                        activeSection === link.id ? "font-semibold text-amber-700 dark:text-emerald-300" : "text-slate-700 dark:text-slate-300"
+                                    }`}
+                                    onClick={() => setMenuOpen(false)}
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+
+                            <div className="flex items-center gap-3 pt-2 border-t border-slate-300/40 dark:border-slate-600/40">
+                                <select
+                                    className="rounded-lg border border-amber-300 dark:border-emerald-700 bg-transparent px-2 py-1 text-sm flex-1"
+                                    value={lang}
+                                    onChange={(e) => setLang(e.target.value)}
+                                    aria-label="Select language"
+                                >
+                                    <option value="en">EN</option>
+                                    <option value="fr">FR</option>
+                                    <option value="es">ES</option>
+                                </select>
+                                <button
+                                    aria-label="Toggle theme"
+                                    onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+                                    className="rounded-lg border border-amber-300 dark:border-emerald-700 px-2 py-1 text-xs"
+                                >
+                                    {theme === "dark" ? "☾" : "☀"}
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </header>
 
                 {/* HERO */}
@@ -846,49 +928,104 @@ Message: ${form.message}`;
                     <div className="max-w-3xl mx-auto px-4">
                         <SectionTitle title={t.booking.title} subtitle={t.booking.lead}/>
                         <form onSubmit={submitBooking} className="mt-10 grid sm:grid-cols-2 gap-4">
+                            {/* Honeypot: hidden input for bots */}
+                            <input
+                                type="text"
+                                name="website"
+                                tabIndex="-1"
+                                autoComplete="off"
+                                className="hidden"
+                                onChange={(e) => setForm({...form, website: e.target.value})}
+                                value={form.website || ""}
+                            />
+
+                            {/* Visible fields */}
                             <label className="block">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.name}</span>
-                                <input required value={form.name}
-                                       onChange={(e) => setForm({...form, name: e.target.value})}
-                                       className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <input
+                                    required
+                                    value={form.name}
+                                    onChange={(e) => setForm({...form, name: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
                             <label className="block">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.email}</span>
-                                <input type="email" required value={form.email}
-                                       onChange={(e) => setForm({...form, email: e.target.value})}
-                                       className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <input
+                                    type="email"
+                                    required
+                                    value={form.email}
+                                    onChange={(e) => setForm({...form, email: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
                             <label className="block">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.checkin}</span>
-                                <input type="date" required value={form.in}
-                                       onChange={(e) => setForm({...form, in: e.target.value})}
-                                       className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <input
+                                    type="date"
+                                    required
+                                    value={form.in}
+                                    onChange={(e) => setForm({...form, in: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
                             <label className="block">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.checkout}</span>
-                                <input type="date" required value={form.out}
-                                       onChange={(e) => setForm({...form, out: e.target.value})}
-                                       className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <input
+                                    type="date"
+                                    required
+                                    value={form.out}
+                                    onChange={(e) => setForm({...form, out: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
                             <label className="block">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.guests}</span>
-                                <input type="number" min={1} max={6} value={form.guests}
-                                       onChange={(e) => setForm({...form, guests: Number(e.target.value)})}
-                                       className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <input
+                                    type="number"
+                                    min={1}
+                                    max={6}
+                                    value={form.guests}
+                                    onChange={(e) => setForm({...form, guests: Number(e.target.value)})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
                             <label className="block sm:col-span-2">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">{t.booking.message}</span>
-                                <textarea rows={4} value={form.message}
-                                          onChange={(e) => setForm({...form, message: e.target.value})}
-                                          className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 bg-white/80 dark:bg-black/40 px-3 py-2"/>
+                                <textarea
+                                    rows={4}
+                                    value={form.message}
+                                    onChange={(e) => setForm({...form, message: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
                             </label>
+
+                            {/* Challenge: human check */}
+                            <label className="block sm:col-span-2">
+                                <span className="text-sm text-slate-700 dark:text-slate-300">
+                                  To confirm you are human, please type <strong>Ikniouen</strong>
+                                </span>
+                                <input
+                                    type="text"
+                                    required
+                                    value={form.challenge || ""}
+                                    onChange={(e) => setForm({...form, challenge: e.target.value})}
+                                    className="mt-1 w-full rounded-xl border border-amber-300 dark:border-emerald-700 px-3 py-2"
+                                />
+                            </label>
+
                             <div className="sm:col-span-2 flex items-center gap-3">
-                                <button type="submit"
-                                        className="rounded-xl bg-amber-700 text-white px-5 py-3 font-semibold shadow hover:bg-amber-800">
+                                <button
+                                    type="submit"
+                                    className="rounded-xl bg-amber-700 text-white px-5 py-3 font-semibold shadow hover:bg-amber-800"
+                                >
                                     {t.booking.submit}
                                 </button>
-                                <a href={`https://wa.me/${PHONE}`} target="_blank" rel="noopener noreferrer"
-                                   className="text-amber-700 dark:text-emerald-300 font-semibold hover:underline">
+                                <a
+                                    href="https://wa.me/YOUR_PHONE_NUMBER"
+                                    target="_blank"
+                                    className="text-amber-700 dark:text-emerald-300 font-semibold hover:underline"
+                                >
                                     {t.booking.alt}
                                 </a>
                             </div>
