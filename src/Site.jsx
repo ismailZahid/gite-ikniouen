@@ -492,7 +492,7 @@ function IconPottery({className}) {
 }
 
 const DIRECT_BONUS = "Book direct = hammam offered (80 MAD/person value)";
-
+const LANGS = ["en", "fr", "es"];
 export default function Site() {
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -500,7 +500,21 @@ export default function Site() {
     /*******************
      * LANGUAGE
      *******************/
-    const [lang, setLang] = useState("en");
+    const [lang, setLang] = useState(() => {
+        if (typeof window === "undefined") return "en";
+
+        // Look for ?lang=xx in URL
+        const params = new URLSearchParams(window.location.search);
+        const urlLang = params.get("lang");
+
+        // Validate: only allow supported langs
+        if (LANGS.includes(urlLang)) {
+            return urlLang;
+        }
+
+        // Fallback
+        return "en";
+    });
     const t = useMemo(() => LANG[lang], [lang]);
 
     const [season, setSeason] = useState("shoulder"); // default middle season
@@ -649,9 +663,13 @@ Message: ${form.message}`;
                                 onChange={(e) => setLang(e.target.value)}
                                 aria-label="Select language"
                             >
-                                <option value="en" className="dark:text-zinc-800">EN</option>
-                                <option value="fr" className="dark:text-zinc-800">FR</option>
-                                <option value="es" className="dark:text-zinc-800">ES</option>
+                                {
+                                    LANGS.map((l) => (
+                                        <option key={l} value={l} className="dark:text-zinc-800">
+                                            {l.toUpperCase()}
+                                        </option>
+                                    ))
+                                }
                             </select>
                             <button
                                 aria-label="Toggle theme"
@@ -725,14 +743,25 @@ Message: ${form.message}`;
                                     className="rounded-lg border border-amber-300 dark:border-emerald-700 bg-transparent px-2 py-1 text-sm flex-1"
                                     value={lang}
                                     onChange={(e) => {
-                                        setLang(e.target.value);
+                                        const newLang = e.target.value;
+                                        setLang(newLang);
                                         setMenuOpen(false);
+
+                                        // Update URL without reloading
+                                        const params = new URLSearchParams(window.location.search);
+                                        params.set("lang", newLang);
+                                        const newUrl = `${window.location.pathname}?${params.toString()}`;
+                                        window.history.replaceState({}, "", newUrl);
                                     }}
                                     aria-label="Select language"
                                 >
-                                    <option value="en" className="dark:text-zinc-800">EN</option>
-                                    <option value="fr" className="dark:text-zinc-800">FR</option>
-                                    <option value="es" className="dark:text-zinc-800">ES</option>
+                                    {
+                                        LANGS.map((l) => (
+                                            <option key={l} value={l} className="dark:text-zinc-800">
+                                                {l.toUpperCase()}
+                                            </option>
+                                        ))
+                                    }
                                 </select>
                                 <button
                                     aria-label="Toggle theme"
