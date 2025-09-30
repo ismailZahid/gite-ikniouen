@@ -2,7 +2,7 @@ import {useEffect, useMemo, useState} from "react";
 import {GALLERY} from "./gallery";
 import {SUITES} from "./suites.js";
 import restauHero from "./assets/restau.png";
-import {Packs} from "./packs.jsx";
+import {PACKS} from "./packs.jsx";
 
 /* =========================
    CONFIG: update these 2!
@@ -93,24 +93,8 @@ const PALETTE = {
 };
 
 
-/* ==== RATES & Packs (from your tarifications PDF) ==== */
-const SEASONS = {
-    low: {key: "low", label: "Low", months: "Dec–mid-Feb, Jul–Aug"},
-    shoulder: {key: "shoulder", label: "Shoulder", months: "Feb, Jun, Sep"},
-    high: {key: "high", label: "High", months: "Mar–May, Oct–mid-Nov + holidays"},
-};
-
 const BAR = {low: 550, shoulder: 620, high: 750}; // MAD / suite / night (BB)
 
-/* Simple rules shown under the grid */
-const RATE_RULES = [
-    {k: "3rd adult (rollaway)", v: "+120 MAD / night"},
-    {k: "Single occupancy", v: "−80 MAD / night"},
-    {k: "Weekend Fri/Sat (shoulder/high)", v: "+50 MAD / night"},
-    {k: "Long stay ≥5 nights (direct)", v: "−10%"},
-    {k: "Non-refundable vs flexible", v: "−10% (flex free cancel to D-7)"},
-    {k: "High season", v: "min. 2 nights when needed"},
-];
 
 /* Upsells / services & activities */
 const UPSELLS = [
@@ -155,7 +139,15 @@ const LANG = {
             ctaPrimary: "Check availability",
             ctaSecondary: "WhatsApp us",
         },
-        suites: {title: "Suites & Rates", note: "Early opening rates — breakfast included"},
+        suites: {
+            title: "Suites & Rates", note: "Early opening rates — breakfast included", name: {
+                1: "Family Suite A",
+                2: "Family Suite B",
+                4: "Garden View Room",
+                5: "Oasis Triple",
+                6: "Atlas Stone Room"
+            }
+        },
         experiences: {
             title: "Experiences",
             items: [
@@ -167,14 +159,44 @@ const LANG = {
             ],
         },
         gallery: {
-            title: "Gallery (preview)",
-            note: "Replace with your photos: garden, patio, rooms, hammam, night sky."
+            title: "Gallery",
+            note: "Moments from our oasis — garden, patios, suites, hammam, and starry nights."
         },
+        rates: {
+            rules: [
+                {k: "3rd adult (rollaway)", v: "+120 MAD / night"},
+                {k: "Single occupancy", v: "−80 MAD / night"},
+                {k: "Weekend Fri/Sat (shoulder/high)", v: "+50 MAD / night"},
+                {k: "Long stay ≥5 nights (direct)", v: "−10%"},
+                {k: "Non-refundable vs flexible", v: "−10% (flex free cancel to D-7)"},
+                {k: "High season", v: "min. 2 nights when needed"},
+            ],
+            subtitle: "All room rates include breakfast (BB). Choose a season to preview prices."
+        },
+        upsells: [
+            {t: "Dinner terroir (set menu)", p: "130 MAD / person"},
+            {t: "Lunch / picnic", p: "80 MAD / person"},
+            {t: "Cooking workshop + meal (2h)", p: "150 MAD / person (min. 2)"},
+            {t: "Hammam beldi", p: "80 MAD / person"},
+            {t: "Hammam duo", p: "160 MAD / 2 persons"},
+            {t: "Pool day-pass (optional)", p: "100 MAD / person"},
+            {t: "Sunset walk 1h30", p: "80 MAD / person (min. 2)"},
+            {t: "Guided hike ½-day", p: "350–450 MAD / person (min. 2)"},
+            {t: "Guided hike full day", p: "600–800 MAD / person (min. 2)"},
+            {t: "Pottery / clay 1h30", p: "120 MAD / person (min. 2)"},
+            {t: "Transfer Tinghir ⇄ Lodge", p: "250–350 MAD / way (from)"},
+            {t: "Transfer Ouarzazate airport", p: "900–1 200 MAD / way (from)"},
+        ],
         location: {
             title: "Where we are",
             body: "Ikniouen sits between the Dadès and Drâa valleys. 40min from Tinghir / 1h from Drâa valley. After booking we share exact directions and a pin.",
             openMaps: "Open in Maps",
         },
+        policies: [
+            "Check-in/out: 15:00 / 11:00 — Late check-out (if available): 150 MAD",
+            "Baby cot: free (on request) — Pets: on request (+80 MAD final cleaning)",
+            "Payment: cash / card (POS) / bank transfer; 30% deposit for packs & groups",
+        ],
         booking: {
             title: "Book your stay",
             lead: "Send us your dates and we'll confirm within hours.",
@@ -186,6 +208,11 @@ const LANG = {
             message: "Message (optional)",
             submit: "Send request",
             alt: "Or write to us on WhatsApp",
+        },
+        seasons:{
+            low: { key: "low", label: "Low", months: "Dec–mid-Feb, Jul–Aug" },
+            shoulder: { key: "shoulder", label: "Shoulder", months: "Feb, Jun, Sep" },
+            high: { key: "high", label: "High", months: "Mar–May, Oct–mid-Nov + holidays" },
         },
         footer: {rights: "All rights reserved.", made: "Made with ❤ in Ikniouen"},
     },
@@ -204,7 +231,16 @@ const LANG = {
             ctaPrimary: "Voir les disponibilités",
             ctaSecondary: "WhatsApp",
         },
-        suites: {title: "Suites & Tarifs", note: "Tarifs d’ouverture — petit-déjeuner inclus"},
+        suites: {
+            title: "Suites & Tarifs", note: "Tarifs d’ouverture — petit-déjeuner inclus",
+            name: {
+                1: "Suite Familiale A",
+                2: "Suite Familiale B",
+                4: "Chambre Vue Jardin",
+                5: "Triple Oasis",
+                6: "Chambre Pierre de l’Atlas"
+            },
+        },
         experiences: {
             title: "Expériences",
             items: [
@@ -216,12 +252,42 @@ const LANG = {
             ],
         },
         gallery: {
-            title: "Galerie (aperçu)",
-            note: "Remplacez par vos photos : jardin, patio, chambres, hammam, ciel nocturne."
+            title: "Galerie",
+            note: "Des moments de notre oasis — jardin, patios, suites, hammam et nuits étoilées."
         },
+        rates: {
+            rules: [
+                {k: "3e adulte (lit d’appoint)", v: "+120 MAD / nuit"},
+                {k: "Occupation simple", v: "−80 MAD / nuit"},
+                {k: "Week-end ven/sam (saison haute/moyenne)", v: "+50 MAD / nuit"},
+                {k: "Long séjour ≥5 nuits (réservation directe)", v: "−10%"},
+                {k: "Non remboursable vs flexible", v: "−10% (flex annulation gratuite à J-7)"},
+                {k: "Saison haute", v: "min. 2 nuits selon période"},
+            ],
+            subtitle: "Tous les tarifs des chambres incluent le petit-déjeuner (BB). Choisissez une saison pour afficher les prix"
+        },
+        upsells: [
+            {t: "Dîner terroir (menu fixe)", p: "130 MAD / personne"},
+            {t: "Déjeuner / pique-nique", p: "80 MAD / personne"},
+            {t: "Atelier cuisine + repas (2h)", p: "150 MAD / personne (min. 2)"},
+            {t: "Hammam beldi", p: "80 MAD / personne"},
+            {t: "Hammam duo", p: "160 MAD / 2 personnes"},
+            {t: "Pass journée piscine (option)", p: "100 MAD / personne"},
+            {t: "Balade coucher de soleil 1h30", p: "80 MAD / personne (min. 2)"},
+            {t: "Randonnée guidée ½-journée", p: "350–450 MAD / personne (min. 2)"},
+            {t: "Randonnée guidée journée complète", p: "600–800 MAD / personne (min. 2)"},
+            {t: "Atelier poterie / argile 1h30", p: "120 MAD / personne (min. 2)"},
+            {t: "Transfert Tinghir ⇄ Gîte", p: "250–350 MAD / trajet (à partir de)"},
+            {t: "Transfert aéroport Ouarzazate", p: "900–1 200 MAD / trajet (à partir de)"},
+        ],
+        policies: [
+            "Arrivée/départ : 15h00 / 11h00 — Départ tardif (si dispo) : 150 MAD",
+            "Lit bébé : gratuit (sur demande) — Animaux : sur demande (+80 MAD ménage final)",
+            "Paiement : espèces / carte (TPE) / virement ; acompte 30% pour packs & groupes",
+        ],
         location: {
             title: "Nous trouver",
-            body: "Ikniouen entre Dadès et Drâa. 1h30 de Tinghir / 2h de Zagora.",
+            body: "Ikniouen se situe entre les vallées du Dadès et du Drâa. 40 min de Tinghir / 1 h de la vallée du Drâa. Après réservation, nous partageons l’itinéraire exact et un repère GPS.",
             openMaps: "Ouvrir dans Maps"
         },
         booking: {
@@ -235,6 +301,11 @@ const LANG = {
             message: "Message (optionnel)",
             submit: "Envoyer",
             alt: "Ou via WhatsApp",
+        },
+        seasons: {
+            low: { key: "low", label: "Basse", months: "Déc.–mi-fév., juil.–août" },
+            shoulder: { key: "shoulder", label: "Moyenne", months: "Fév., juin, sept." },
+            high: { key: "high", label: "Haute", months: "Mars–mai, oct.–mi-nov. + vacances" },
         },
         footer: {rights: "Tous droits réservés.", made: "Fait avec ❤ à Ikniouen"},
     },
@@ -253,7 +324,16 @@ const LANG = {
             ctaPrimary: "Ver disponibilidad",
             ctaSecondary: "WhatsApp",
         },
-        suites: {title: "Suites y precios", note: "Tarifas de apertura — desayuno incluido"},
+        suites: {
+            title: "Suites y precios", note: "Tarifas de apertura — desayuno incluido",
+            name: {
+                1: "Suite Familiar A",
+                2: "Suite Familiar B",
+                4: "Habitación Vista Jardín",
+                5: "Triple Oasis",
+                6: "Habitación Piedra del Atlas"
+            }
+        },
         experiences: {
             title: "Experiencias",
             items: [
@@ -265,12 +345,42 @@ const LANG = {
             ],
         },
         gallery: {
-            title: "Galería (vista previa)",
-            note: "Reemplaza con tus fotos: jardín, patio, habitaciones, hammam, cielo nocturno."
+            title: "Galería",
+            note: "Momentos de nuestro oasis — jardín, patios, suites, hammam y cielos estrellados."
         },
+        rates: {
+            rules: [
+                {k: "3er adulto (cama supletoria)", v: "+120 MAD / noche"},
+                {k: "Ocupación individual", v: "–80 MAD / noche"},
+                {k: "Fin de semana vie/sáb (temporada alta/media)", v: "+50 MAD / noche"},
+                {k: "Estancia larga ≥5 noches (reserva directa)", v: "–10%"},
+                {k: "No reembolsable vs flexible", v: "–10% (flexible = cancelación gratuita hasta 7 días antes)"},
+                {k: "Temporada alta", v: "mín. 2 noches según el período"}
+            ],
+            subtitle: "Todas las tarifas de las habitaciones incluyen el desayuno (BB). Elige una temporada para ver los precios."
+        },
+        upsells: [
+            {t: "Cena de terroir (menú fijo)", p: "130 MAD / persona"},
+            {t: "Almuerzo / picnic", p: "80 MAD / persona"},
+            {t: "Taller de cocina + comida (2h)", p: "150 MAD / persona (mín. 2)"},
+            {t: "Hammam beldi", p: "80 MAD / persona"},
+            {t: "Hammam dúo", p: "160 MAD / 2 personas"},
+            {t: "Pase diario piscina (opcional)", p: "100 MAD / persona"},
+            {t: "Paseo al atardecer 1h30", p: "80 MAD / persona (mín. 2)"},
+            {t: "Excursión guiada ½ día", p: "350–450 MAD / persona (mín. 2)"},
+            {t: "Excursión guiada día completo", p: "600–800 MAD / persona (mín. 2)"},
+            {t: "Taller de alfarería / arcilla 1h30", p: "120 MAD / persona (mín. 2)"},
+            {t: "Traslado Tinghir ⇄ Lodge", p: "250–350 MAD / trayecto (desde)"},
+            {t: "Traslado aeropuerto Ouarzazate", p: "900–1 200 MAD / trayecto (desde)"},
+        ],
+        policies: [
+            "Check-in/out: 15:00 / 11:00 — Late check-out (si disponible): 150 MAD",
+            "Cuna: gratis (bajo petición) — Mascotas: bajo petición (+80 MAD limpieza final)",
+            "Pago: efectivo / tarjeta (TPV) / transferencia bancaria; 30% de depósito para packs y grupos",
+        ],
         location: {
             title: "Dónde estamos",
-            body: "Ikniouen entre Dadès y Drâa. 1h30 de Tinghir / 2h de Zagora.",
+            body: "Ikniouen se encuentra entre los valles del Dadès y del Drâa. 40 min de Tinghir / 1 h del valle del Drâa. Tras la reserva compartimos las indicaciones exactas y una ubicación.",
             openMaps: "Abrir en Maps"
         },
         booking: {
@@ -284,6 +394,11 @@ const LANG = {
             message: "Mensaje (opcional)",
             submit: "Enviar solicitud",
             alt: "O por WhatsApp",
+        },
+        seasons:{
+            low: { key: "low", label: "Baja", months: "Dic.–mediados feb., jul.–ago." },
+            shoulder: { key: "shoulder", label: "Media", months: "Feb., jun., sept." },
+            high: { key: "high", label: "Alta", months: "Mar.–may., oct.–mediados nov. + festivos" },
         },
         footer: {rights: "Todos los derechos reservados.", made: "Hecho con ❤ en Ikniouen"},
     },
@@ -830,7 +945,7 @@ Message: ${form.message}`;
                                              className="h-full w-full object-cover"
                                              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"/>
                                     </div>
-                                    <h3 className="mt-4 text-lg font-bold">{s.name}</h3>
+                                    <h3 className="mt-4 text-lg font-bold">{t.suites.name[s.id]}</h3>
                                     <div
                                         className="mt-2 flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
                                         <IconGuests className="h-4 w-4"/> {s.pax}
@@ -987,7 +1102,6 @@ Message: ${form.message}`;
                 )}
 
 
-
                 {/* RATES & Packs */}
                 <section id="rates" className="relative py-20">
                     {/* zellige-ish background wash */}
@@ -1003,7 +1117,7 @@ Message: ${form.message}`;
                         <SectionTitle
                             kicker="Pricing"
                             title="Rates & Packs"
-                            subtitle="All room rates include breakfast (BB). Choose a season to preview prices."
+                            subtitle={t.rates.subtitle}
                         />
 
                         {/* season toggle */}
@@ -1014,15 +1128,15 @@ Message: ${form.message}`;
                                     key={k}
                                     onClick={() => setSeason(k)}
                                     className={`px-4 py-2 text-sm font-medium transition
-            ${season === k
+                                    ${season === k
                                         ? "bg-[#E7E0CF] text-[#5E5433] dark:bg-[#1C2C19]/50 dark:text-[#C9C39E]"
                                         : "text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-white/10"}`}
                                 >
-                                    {SEASONS[k].label}
+                                    {t.seasons[k].label}
                                 </button>
                             ))}
                         </div>
-                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-800">{SEASONS[season].months}</div>
+                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-800">{t.seasons[season].months}</div>
 
                         {/* BAR cards */}
                         <div className="mt-8 grid md:grid-cols-3 gap-6">
@@ -1032,10 +1146,10 @@ Message: ${form.message}`;
                                     <div className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 h-full">
                                         <div
                                             className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                                            {SEASONS[k].label}
+                                            {t.seasons[k].label}
                                         </div>
                                         <div
-                                            className="mt-1 text-xs text-slate-800 dark:text-slate-900">{SEASONS[k].months}</div>
+                                            className="mt-1 text-xs text-slate-800 dark:text-slate-900">{t.seasons[k].months}</div>
                                         <div className="mt-5 text-3xl font-extrabold">
                                             {fmtMAD(BAR[k])} <span className="text-sm font-medium text-slate-800">/ night (BB)</span>
                                         </div>
@@ -1058,7 +1172,7 @@ Message: ${form.message}`;
                                 className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 border border-amber-200 dark:border-emerald-900">
                                 <h3 className="font-bold text-lg">Rules</h3>
                                 <ul className="mt-3 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
-                                    {RATE_RULES.map((r, i) => (
+                                    {t.rates.rules.map((r, i) => (
                                         <li key={i} className="flex items-start gap-2">
                                             <span
                                                 className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300"></span>
@@ -1071,7 +1185,7 @@ Message: ${form.message}`;
                                 className="rounded-3xl bg-white/85 dark:bg-slate-900/50 p-6 border border-amber-200 dark:border-emerald-900">
                                 <h3 className="font-bold text-lg">Policies & extras</h3>
                                 <ul className="mt-3 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
-                                    {POLICIES.map((p, i) => (
+                                    {t.policies.map((p, i) => (
                                         <li key={i} className="flex items-start gap-2">
                                             <span
                                                 className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-700 dark:bg-emerald-300"></span>
@@ -1107,7 +1221,7 @@ Message: ${form.message}`;
 
                             {/* Pack cards */}
                             <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {Packs.map((p) => (
+                                {PACKS[lang].map((p) => (
                                     <article
                                         key={p.id}
                                         className="rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/80 dark:bg-black/40 backdrop-blur p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between"
@@ -1149,7 +1263,7 @@ Message: ${form.message}`;
                         <div className="mt-12">
                             <h3 className="font-bold text-xl mb-4">Services & activities (à la carte)</h3>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {UPSELLS.map((u, i) => (
+                                {t.upsells.map((u, i) => (
                                     <div key={i}
                                          className="flex items-center justify-between rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/80 dark:bg-black/40 px-4 py-3">
                                         <span className="text-slate-800 dark:text-slate-200">{u.t}</span>
