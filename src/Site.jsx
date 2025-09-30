@@ -2,7 +2,7 @@ import {useEffect, useMemo, useState} from "react";
 import {GALLERY} from "./gallery";
 import {SUITES} from "./suites.js";
 import restauHero from "./assets/restau.png";
-import { Packs } from "./packs.jsx";
+import {Packs} from "./packs.jsx";
 
 /* =========================
    CONFIG: update these 2!
@@ -568,7 +568,19 @@ Message: ${form.message}`;
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
     }
 
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+    useEffect(() => {
+        function handleKey(e) {
+            if (!lightboxOpen) return;
+            if (e.key === "Escape") setLightboxOpen(false);
+            if (e.key === "ArrowRight") setLightboxIndex((i) => (i + 1) % GALLERY.length);
+            if (e.key === "ArrowLeft") setLightboxIndex((i) => (i - 1 + GALLERY.length) % GALLERY.length);
+        }
 
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [lightboxOpen]);
     return (
         <div>
             <div
@@ -895,10 +907,20 @@ Message: ${form.message}`;
                         <SectionTitle title={t.gallery.title} subtitle={t.gallery.note}/>
                         <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {GALLERY.map((img, i) => (
-                                <figure key={i}
-                                        className="group relative overflow-hidden rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/70 dark:bg-slate-900/60 aspect-[4/3]">
-                                    <img src={img.src} alt={img.alt} loading="lazy" decoding="async"
-                                         className="h-full w-full object-cover"/>
+                                <figure
+                                    key={i}
+                                    className="group relative overflow-hidden rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/70 dark:bg-slate-900/60 aspect-[4/3] cursor-pointer"
+                                    onClick={() => {
+                                        setLightboxIndex(i);
+                                        setLightboxOpen(true);
+                                    }}
+                                >
+                                    <img
+                                        src={img.src}
+                                        alt={img.alt}
+                                        loading="lazy"
+                                        className="h-full w-full object-cover transition group-hover:scale-105"
+                                    />
                                     <figcaption
                                         className="absolute bottom-0 left-0 right-0 p-3 text-sm bg-white/70 dark:bg-black/30 backdrop-blur opacity-0 group-hover:opacity-100 transition">
                                         {img.alt}
@@ -908,6 +930,63 @@ Message: ${form.message}`;
                         </div>
                     </div>
                 </section>
+                {lightboxOpen && (
+                    <div className="fixed inset-0 bg-black/90 flex flex-col z-[9999]">
+                        {/* Close button */}
+                        <button
+                            onClick={() => setLightboxOpen(false)}
+                            className="absolute top-4 right-4 text-white text-3xl font-bold hover:text-amber-400"
+                            aria-label="Close"
+                        >
+                            ×
+                        </button>
+
+                        {/* Prev button */}
+                        <button
+                            onClick={() =>
+                                setLightboxIndex((lightboxIndex - 1 + GALLERY.length) % GALLERY.length)
+                            }
+                            className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold hover:text-amber-400"
+                            aria-label="Previous"
+                        >
+                            ‹
+                        </button>
+
+                        {/* Next button */}
+                        <button
+                            onClick={() => setLightboxIndex((lightboxIndex + 1) % GALLERY.length)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold hover:text-amber-400"
+                            aria-label="Next"
+                        >
+                            ›
+                        </button>
+
+                        {/* Main image area (flexible height) */}
+                        <div className="flex-1 flex items-center justify-center px-6">
+                            <img
+                                src={GALLERY[lightboxIndex].src}
+                                alt={GALLERY[lightboxIndex].alt}
+                                className="max-h-[80%] max-w-full rounded-lg shadow-lg object-contain"
+                            />
+                        </div>
+
+                        {/* Thumbnails footer (fixed at bottom) */}
+                        <div className="flex gap-2 overflow-x-auto p-4 bg-black/70 w-full justify-center">
+                            {GALLERY.map((thumb, idx) => (
+                                <img
+                                    key={idx}
+                                    src={thumb.src}
+                                    alt={thumb.alt}
+                                    className={`h-16 w-24 object-cover rounded-md cursor-pointer border-2 transition 
+            ${idx === lightboxIndex ? "border-amber-500" : "border-transparent hover:border-amber-300"}`}
+                                    onClick={() => setLightboxIndex(idx)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+
 
                 {/* RATES & Packs */}
                 <section id="rates" className="relative py-20">
@@ -1005,7 +1084,7 @@ Message: ${form.message}`;
 
                         {/* Packs */}
                         <div className="max-w-7xl mx-auto mt-16">
-                            <SectionTitle subtitle="Special offers designed for simplicity and great value" />
+                            <SectionTitle subtitle="Special offers designed for simplicity and great value"/>
 
                             {/* Tabs */}
                             <div className="flex justify-center gap-2 mt-8">
@@ -1044,7 +1123,8 @@ Message: ${form.message}`;
 
                                         <div className="mt-4">
                                             {p.group ? (
-                                                <div className="text-xl font-extrabold text-emerald-700 dark:text-emerald-300">
+                                                <div
+                                                    className="text-xl font-extrabold text-emerald-700 dark:text-emerald-300">
                                                     {p.rates[currentSeason]}
                                                 </div>
                                             ) : (
