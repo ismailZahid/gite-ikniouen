@@ -8,11 +8,53 @@ import behindEntrance from './assets/behind-entrance.png';
 
 
 export const GALLERY = [
-    {src: entrance, alt: 'Entrance'},
-    {src: behindEntrance, alt: 'Behind Entrance'},
-    {src: garden2, alt: 'Garden View'},
-    {src: gardenPergola, alt: 'Garden Pergola'},
-    {src: gardenTent, alt: 'Garden Tent'},
-    {src: restau, alt: 'Restaurant'},
-    {src: starGaze, alt: 'Star Gazing Area'}
+    {
+        src: entrance, alt: 'Entrance', description: {
+            en: 'Entrance',
+            fr: 'Entrée',
+            es: 'Entrada'
+        }
+    },
+    {
+        src: behindEntrance, alt: 'Behind Entrance', description: {
+            en: 'Behind Entrance',
+            fr: 'Derrière l\'entrée',
+            es: 'Detrás de la entrada'
+        }
+    },
+    {
+        src: garden2, alt: 'Garden View', description: {
+            en: 'Garden View',
+            fr: 'Vue du jardin',
+            es: 'Vista del jardín'
+        }
+    },
+    {
+        src: gardenPergola, alt: 'Garden Pergola', description: {
+            en: 'Garden Pergola',
+            fr: 'Pergola du jardin',
+            es: 'Pérgola del jardín'
+        }
+    },
+    {
+        src: gardenTent, alt: 'Garden Tent', description: {
+            en: 'Garden Tent',
+            fr: 'Tente du jardin',
+            es: 'Tienda del jardín'
+        }
+    },
+    {
+        src: restau, alt: 'Restaurant', description: {
+            en: 'Restaurant',
+            fr: 'Restaurant',
+            es: 'Restaurante'
+        }
+    },
+    {
+        src: starGaze, alt: 'Star Gazing Area', description: {
+            en: 'Star Gazing Area',
+            fr: 'Espace d\'observation des étoiles',
+            es: 'Área de observación de estrellas'
+        }
+    }
 ];

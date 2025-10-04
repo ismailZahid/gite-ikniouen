@@ -135,21 +135,29 @@ const LANG = {
         },
         hero: {
             title: "Gite Ikniouen",
-            subtitle: "Berber rural lodge between Dadès & Drâa valleys — adobe walls, palm-shaded patios, and star-bright nights.",
+            subtitle: "Berber rural lodge between Dadès & Dra valleys — adobe walls, tree-shaded patios, and star-bright nights.",
             ctaPrimary: "Check availability",
             ctaSecondary: "WhatsApp us",
+            guests: {title: "Guests", description: "up to 15"},
+            suites: {title: "Suites", description: "5"},
+            garden: {title: "Garden", description: "Oasis orchard"},
+            energy: {title: "Energy", description: "Solar hot water"}
         },
         suites: {
-            title: "Suites & Rates", note: "Early opening rates — breakfast included", name: {
+            title: "Suites & Rates",
+            note: "Early opening rates — breakfast included",
+            name: {
                 1: "Family Suite A",
                 2: "Family Suite B",
                 4: "Garden View Room",
                 5: "Oasis Triple",
                 6: "Atlas Stone Room"
-            }
+            },
+            seeRates: "See seasonal rates"
         },
         experiences: {
             title: "Experiences",
+            tag: "Slow travel",
             items: [
                 {title: "Hammam beldi", text: "Warm tadelakt walls, eucalyptus steam, slow rituals."},
                 {title: "Garden-to-table cuisine", text: "Seasonal vegetables, local bread, tajines and couscous."},
@@ -171,25 +179,29 @@ const LANG = {
                 {k: "Non-refundable vs flexible", v: "−10% (flex free cancel to D-7)"},
                 {k: "High season", v: "min. 2 nights when needed"},
             ],
+            title: "Rates & Packs",
             subtitle: "All room rates include breakfast (BB). Choose a season to preview prices."
         },
-        upsells: [
-            {t: "Dinner terroir (set menu)", p: "130 MAD / person"},
-            {t: "Lunch / picnic", p: "80 MAD / person"},
-            {t: "Cooking workshop + meal (2h)", p: "150 MAD / person (min. 2)"},
-            {t: "Hammam beldi", p: "80 MAD / person"},
-            {t: "Hammam duo", p: "160 MAD / 2 persons"},
-            {t: "Pool day-pass (optional)", p: "100 MAD / person"},
-            {t: "Sunset walk 1h30", p: "80 MAD / person (min. 2)"},
-            {t: "Guided hike ½-day", p: "350–450 MAD / person (min. 2)"},
-            {t: "Guided hike full day", p: "600–800 MAD / person (min. 2)"},
-            {t: "Pottery / clay 1h30", p: "120 MAD / person (min. 2)"},
-            {t: "Transfer Tinghir ⇄ Lodge", p: "250–350 MAD / way (from)"},
-            {t: "Transfer Ouarzazate airport", p: "900–1 200 MAD / way (from)"},
-        ],
+        upsells:{
+            title: "Service & Activities (on demand)",
+            items:  [
+                {t: "Dinner terroir (set menu)", p: "130 MAD / person"},
+                {t: "Lunch / picnic", p: "80 MAD / person"},
+                {t: "Cooking workshop + meal (2h)", p: "150 MAD / person (min. 2)"},
+                {t: "Hammam beldi", p: "80 MAD / person"},
+                {t: "Hammam duo", p: "160 MAD / 2 persons"},
+                {t: "Pool day-pass (optional)", p: "100 MAD / person"},
+                {t: "Sunset walk 1h30", p: "80 MAD / person (min. 2)"},
+                {t: "Guided hike ½-day", p: "350–450 MAD / person (min. 2)"},
+                {t: "Guided hike full day", p: "600–800 MAD / person (min. 2)"},
+                {t: "Pottery / clay 1h30", p: "120 MAD / person (min. 2)"},
+                {t: "Transfer Tinghir ⇄ Lodge", p: "250–350 MAD / way (from)"},
+                {t: "Transfer Ouarzazate airport", p: "900–1 200 MAD / way (from)"},
+            ]
+        },
         location: {
             title: "Where we are",
-            body: "Ikniouen sits between the Dadès and Drâa valleys. 40min from Tinghir / 1h from Drâa valley. After booking we share exact directions and a pin.",
+            body: "Ikniouen sits between the Dadès and Dra valleys. 40min from Tinghir / 1h from Dra valley. After booking we share exact directions and a pin.",
             openMaps: "Open in Maps",
         },
         policies: [
@@ -208,11 +220,12 @@ const LANG = {
             message: "Message (optional)",
             submit: "Send request",
             alt: "Or write to us on WhatsApp",
+            confirmLabel: "To confirm you're not a robot, please type "
         },
-        seasons:{
-            low: { key: "low", label: "Low", months: "Dec–mid-Feb, Jul–Aug" },
-            shoulder: { key: "shoulder", label: "Shoulder", months: "Feb, Jun, Sep" },
-            high: { key: "high", label: "High", months: "Mar–May, Oct–mid-Nov + holidays" },
+        seasons: {
+            low: {key: "low", label: "Low", months: "Dec–mid-Feb, Jul–Aug"},
+            shoulder: {key: "shoulder", label: "Shoulder", months: "Feb, Jun, Sep"},
+            high: {key: "high", label: "High", months: "Mar–May, Oct–mid-Nov + holidays"},
         },
         footer: {rights: "All rights reserved.", made: "Made with ❤ in Ikniouen"},
     },
@@ -227,9 +240,13 @@ const LANG = {
         },
         hero: {
             title: "Gîte Ikniouen",
-            subtitle: "Maison d’hôtes berbère entre Dadès et Drâa — murs en terre, patios ombragés de palmiers et nuits étoilées.",
+            subtitle: "Maison d’hôtes berbère entre Dadès et Dra — murs en terre, patios ombragés d'arbres et nuits étoilées.",
             ctaPrimary: "Voir les disponibilités",
             ctaSecondary: "WhatsApp",
+            guests: {title: "Visiteurs", description: "jusqu’à 15"},
+            suites: {title: "Suites", description: "5"},
+            garden: {title: "Jardin", description: "Verger oasis"},
+            energy: {title: "Énergie", description: "Eau chaude solaire"}
         },
         suites: {
             title: "Suites & Tarifs", note: "Tarifs d’ouverture — petit-déjeuner inclus",
@@ -240,9 +257,11 @@ const LANG = {
                 5: "Triple Oasis",
                 6: "Chambre Pierre de l’Atlas"
             },
+            seeRates: "Voir les tarifs saisonniers"
         },
         experiences: {
             title: "Expériences",
+            tag: "Voyage lent",
             items: [
                 {title: "Hammam beldi", text: "Murs en tadelakt, vapeur à l’eucalyptus, rituels lents."},
                 {title: "Cuisine du potager", text: "Légumes de saison, pain au feu, tajines et couscous."},
@@ -264,22 +283,26 @@ const LANG = {
                 {k: "Non remboursable vs flexible", v: "−10% (flex annulation gratuite à J-7)"},
                 {k: "Saison haute", v: "min. 2 nuits selon période"},
             ],
+            title: "Tarifs & Packs",
             subtitle: "Tous les tarifs des chambres incluent le petit-déjeuner (BB). Choisissez une saison pour afficher les prix"
         },
-        upsells: [
-            {t: "Dîner terroir (menu fixe)", p: "130 MAD / personne"},
-            {t: "Déjeuner / pique-nique", p: "80 MAD / personne"},
-            {t: "Atelier cuisine + repas (2h)", p: "150 MAD / personne (min. 2)"},
-            {t: "Hammam beldi", p: "80 MAD / personne"},
-            {t: "Hammam duo", p: "160 MAD / 2 personnes"},
-            {t: "Pass journée piscine (option)", p: "100 MAD / personne"},
-            {t: "Balade coucher de soleil 1h30", p: "80 MAD / personne (min. 2)"},
-            {t: "Randonnée guidée ½-journée", p: "350–450 MAD / personne (min. 2)"},
-            {t: "Randonnée guidée journée complète", p: "600–800 MAD / personne (min. 2)"},
-            {t: "Atelier poterie / argile 1h30", p: "120 MAD / personne (min. 2)"},
-            {t: "Transfert Tinghir ⇄ Gîte", p: "250–350 MAD / trajet (à partir de)"},
-            {t: "Transfert aéroport Ouarzazate", p: "900–1 200 MAD / trajet (à partir de)"},
-        ],
+        upsells: {
+            title: "Services & Activités (sur demande)",
+            items: [
+                {t: "Dîner terroir (menu fixe)", p: "130 MAD / personne"},
+                {t: "Déjeuner / pique-nique", p: "80 MAD / personne"},
+                {t: "Atelier cuisine + repas (2h)", p: "150 MAD / personne (min. 2)"},
+                {t: "Hammam beldi", p: "80 MAD / personne"},
+                {t: "Hammam duo", p: "160 MAD / 2 personnes"},
+                {t: "Pass journée piscine (option)", p: "100 MAD / personne"},
+                {t: "Balade coucher de soleil 1h30", p: "80 MAD / personne (min. 2)"},
+                {t: "Randonnée guidée ½-journée", p: "350–450 MAD / personne (min. 2)"},
+                {t: "Randonnée guidée journée complète", p: "600–800 MAD / personne (min. 2)"},
+                {t: "Atelier poterie / argile 1h30", p: "120 MAD / personne (min. 2)"},
+                {t: "Transfert Tinghir ⇄ Gîte", p: "250–350 MAD / trajet (à partir de)"},
+                {t: "Transfert aéroport Ouarzazate", p: "900–1 200 MAD / trajet (à partir de)"},
+            ]
+        },
         policies: [
             "Arrivée/départ : 15h00 / 11h00 — Départ tardif (si dispo) : 150 MAD",
             "Lit bébé : gratuit (sur demande) — Animaux : sur demande (+80 MAD ménage final)",
@@ -287,7 +310,7 @@ const LANG = {
         ],
         location: {
             title: "Nous trouver",
-            body: "Ikniouen se situe entre les vallées du Dadès et du Drâa. 40 min de Tinghir / 1 h de la vallée du Drâa. Après réservation, nous partageons l’itinéraire exact et un repère GPS.",
+            body: "Ikniouen se situe entre les vallées du Dadès et du Dra. 40 min de Tinghir / 1 h de la vallée du Dra. Après réservation, nous partageons l’itinéraire exact et un repère GPS.",
             openMaps: "Ouvrir dans Maps"
         },
         booking: {
@@ -301,11 +324,12 @@ const LANG = {
             message: "Message (optionnel)",
             submit: "Envoyer",
             alt: "Ou via WhatsApp",
+            confirmLabel: "Pour confirmer que vous n'êtes pas un robot, écrivez "
         },
         seasons: {
-            low: { key: "low", label: "Basse", months: "Déc.–mi-fév., juil.–août" },
-            shoulder: { key: "shoulder", label: "Moyenne", months: "Fév., juin, sept." },
-            high: { key: "high", label: "Haute", months: "Mars–mai, oct.–mi-nov. + vacances" },
+            low: {key: "low", label: "Basse", months: "Déc.–mi-fév., juil.–août"},
+            shoulder: {key: "shoulder", label: "Moyenne", months: "Fév., juin, sept."},
+            high: {key: "high", label: "Haute", months: "Mars–mai, oct.–mi-nov. + vacances"},
         },
         footer: {rights: "Tous droits réservés.", made: "Fait avec ❤ à Ikniouen"},
     },
@@ -320,22 +344,29 @@ const LANG = {
         },
         hero: {
             title: "Gîte Ikniouen",
-            subtitle: "Alojamiento rural bereber entre los valles Dadès y Drâa — muros de adobe, patios con palmeras y cielos estrellados.",
+            subtitle: "Alojamiento rural bereber entre los valles Dadès y Dra — muros de adobe, patios con árboles y cielos estrellados.",
             ctaPrimary: "Ver disponibilidad",
             ctaSecondary: "WhatsApp",
+            guests: {title: "Huéspedes", description: "hasta 15"},
+            suites: {title: "Suites", description: "5"},
+            garden: {title: "Jardín", description: "Huerto oasis"},
+            energy: {title: "Energía", description: "Agua caliente solar"}
         },
         suites: {
-            title: "Suites y precios", note: "Tarifas de apertura — desayuno incluido",
+            title: "Suites y precios",
+            note: "Tarifas de apertura — desayuno incluido",
             name: {
                 1: "Suite Familiar A",
                 2: "Suite Familiar B",
                 4: "Habitación Vista Jardín",
                 5: "Triple Oasis",
                 6: "Habitación Piedra del Atlas"
-            }
+            },
+            seeRates: "Ver tarifas según temporada"
         },
         experiences: {
             title: "Experiencias",
+            tag: "Viaje lento",
             items: [
                 {title: "Hammam beldi", text: "Vapor con eucalipto, muros cálidos, rituales lentos."},
                 {title: "Cocina del huerto", text: "Verduras de temporada, pan al fuego, tajines y cuscús."},
@@ -357,22 +388,26 @@ const LANG = {
                 {k: "No reembolsable vs flexible", v: "–10% (flexible = cancelación gratuita hasta 7 días antes)"},
                 {k: "Temporada alta", v: "mín. 2 noches según el período"}
             ],
+            title: "Tarifas y Paquetes",
             subtitle: "Todas las tarifas de las habitaciones incluyen el desayuno (BB). Elige una temporada para ver los precios."
         },
-        upsells: [
-            {t: "Cena de terroir (menú fijo)", p: "130 MAD / persona"},
-            {t: "Almuerzo / picnic", p: "80 MAD / persona"},
-            {t: "Taller de cocina + comida (2h)", p: "150 MAD / persona (mín. 2)"},
-            {t: "Hammam beldi", p: "80 MAD / persona"},
-            {t: "Hammam dúo", p: "160 MAD / 2 personas"},
-            {t: "Pase diario piscina (opcional)", p: "100 MAD / persona"},
-            {t: "Paseo al atardecer 1h30", p: "80 MAD / persona (mín. 2)"},
-            {t: "Excursión guiada ½ día", p: "350–450 MAD / persona (mín. 2)"},
-            {t: "Excursión guiada día completo", p: "600–800 MAD / persona (mín. 2)"},
-            {t: "Taller de alfarería / arcilla 1h30", p: "120 MAD / persona (mín. 2)"},
-            {t: "Traslado Tinghir ⇄ Lodge", p: "250–350 MAD / trayecto (desde)"},
-            {t: "Traslado aeropuerto Ouarzazate", p: "900–1 200 MAD / trayecto (desde)"},
-        ],
+        upsells: {
+            title: "Servicios y Actividades (bajo demanda)",
+            items: [
+                {t: "Cena de terroir (menú fijo)", p: "130 MAD / persona"},
+                {t: "Almuerzo / picnic", p: "80 MAD / persona"},
+                {t: "Taller de cocina + comida (2h)", p: "150 MAD / persona (mín. 2)"},
+                {t: "Hammam beldi", p: "80 MAD / persona"},
+                {t: "Hammam dúo", p: "160 MAD / 2 personas"},
+                {t: "Pase diario piscina (opcional)", p: "100 MAD / persona"},
+                {t: "Paseo al atardecer 1h30", p: "80 MAD / persona (mín. 2)"},
+                {t: "Excursión guiada ½ día", p: "350–450 MAD / persona (mín. 2)"},
+                {t: "Excursión guiada día completo", p: "600–800 MAD / persona (mín. 2)"},
+                {t: "Taller de alfarería / arcilla 1h30", p: "120 MAD / persona (mín. 2)"},
+                {t: "Traslado Tinghir ⇄ Lodge", p: "250–350 MAD / trayecto (desde)"},
+                {t: "Traslado aeropuerto Ouarzazate", p: "900–1 200 MAD / trayecto (desde)"},
+            ]
+        },
         policies: [
             "Check-in/out: 15:00 / 11:00 — Late check-out (si disponible): 150 MAD",
             "Cuna: gratis (bajo petición) — Mascotas: bajo petición (+80 MAD limpieza final)",
@@ -380,7 +415,7 @@ const LANG = {
         ],
         location: {
             title: "Dónde estamos",
-            body: "Ikniouen se encuentra entre los valles del Dadès y del Drâa. 40 min de Tinghir / 1 h del valle del Drâa. Tras la reserva compartimos las indicaciones exactas y una ubicación.",
+            body: "Ikniouen se encuentra entre los valles del Dadès y del Dra. 40 min de Tinghir / 1 h del valle del Dra. Tras la reserva compartimos las indicaciones exactas y una ubicación.",
             openMaps: "Abrir en Maps"
         },
         booking: {
@@ -394,11 +429,12 @@ const LANG = {
             message: "Mensaje (opcional)",
             submit: "Enviar solicitud",
             alt: "O por WhatsApp",
+            confirmLabel: "Para confirmar que no eres un robot, escribe "
         },
-        seasons:{
-            low: { key: "low", label: "Baja", months: "Dic.–mediados feb., jul.–ago." },
-            shoulder: { key: "shoulder", label: "Media", months: "Feb., jun., sept." },
-            high: { key: "high", label: "Alta", months: "Mar.–may., oct.–mediados nov. + festivos" },
+        seasons: {
+            low: {key: "low", label: "Baja", months: "Dic.–mediados feb., jul.–ago."},
+            shoulder: {key: "shoulder", label: "Media", months: "Feb., jun., sept."},
+            high: {key: "high", label: "Alta", months: "Mar.–may., oct.–mediados nov. + festivos"},
         },
         footer: {rights: "Todos los derechos reservados.", made: "Hecho con ❤ en Ikniouen"},
     },
@@ -920,13 +956,13 @@ Message: ${form.message}`;
                             </div>
                             <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6">
                                 <Stat icon={<IconBed className="h-6 w-6 text-amber-700 dark:text-emerald-300"/>}
-                                      label="Suites" value="5"/>
+                                      label={t.hero.suites.title} value={t.hero.suites.description}/>
                                 <Stat icon={<IconGuests className="h-6 w-6 text-amber-700 dark:text-emerald-300"/>}
-                                      label="Guests" value="up to 15"/>
+                                      label={t.hero.guests.title} value={t.hero.guests.description}/>
                                 <Stat icon={<IconLeaf className="h-6 w-6 text-amber-700 dark:text-emerald-300"/>}
-                                      label="Energy" value="Solar hot water"/>
+                                      label={t.hero.energy.title} value={t.hero.energy.description}/>
                                 <Stat icon={<IconPalm className="h-6 w-6 text-amber-700 dark:text-emerald-300"/>}
-                                      label="Garden" value="Oasis orchard"/>
+                                      label={t.hero.garden.title} value={t.hero.garden.description}/>
                             </div>
                         </div>
                     </div>
@@ -935,7 +971,7 @@ Message: ${form.message}`;
                 {/* SUITES */}
                 <section id="suites" className="py-20 bg-amber-50/60 dark:bg-black/40">
                     <div className="max-w-7xl mx-auto px-4">
-                        <SectionTitle kicker="Rooms" title={t.suites.title} subtitle={t.suites.note}/>
+                        <SectionTitle title={t.suites.title} subtitle={t.suites.note}/>
                         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {SUITES.map((s) => (
                                 <article key={s.id}
@@ -959,7 +995,7 @@ Message: ${form.message}`;
                                         </div>
                                         <a href="#rates"
                                            className="text-amber-700 dark:text-emerald-300 font-semibold hover:underline">
-                                            See seasonal rates
+                                            {t.suites.seeRates}
                                         </a>
                                     </div>
                                 </article>
@@ -1006,7 +1042,9 @@ Message: ${form.message}`;
                                             </div>
                                             <p className="mt-2 text-slate-700 dark:text-slate-300">{it.text}</p>
                                             <div className="mt-4">
-                                                <Chip>{/* small tag hint for vibe */}slow travel</Chip>
+                                                <Chip>
+                                                    {t.experiences.tag}
+                                                </Chip>
                                             </div>
                                         </div>
                                     </div>
@@ -1038,7 +1076,7 @@ Message: ${form.message}`;
                                     />
                                     <figcaption
                                         className="absolute bottom-0 left-0 right-0 p-3 text-sm bg-white/70 dark:bg-black/30 backdrop-blur opacity-0 group-hover:opacity-100 transition">
-                                        {img.alt}
+                                        {img.description[lang]}
                                     </figcaption>
                                 </figure>
                             ))}
@@ -1115,8 +1153,7 @@ Message: ${form.message}`;
                     />
                     <div className="max-w-7xl mx-auto px-4">
                         <SectionTitle
-                            kicker="Pricing"
-                            title="Rates & Packs"
+                            title={t.rates.title}
                             subtitle={t.rates.subtitle}
                         />
 
@@ -1136,7 +1173,8 @@ Message: ${form.message}`;
                                 </button>
                             ))}
                         </div>
-                        <div className="mt-2 text-xs text-slate-600 dark:text-slate-800">{t.seasons[season].months}</div>
+                        <div
+                            className="mt-2 text-xs text-slate-600 dark:text-slate-800">{t.seasons[season].months}</div>
 
                         {/* BAR cards */}
                         <div className="mt-8 grid md:grid-cols-3 gap-6">
@@ -1261,9 +1299,9 @@ Message: ${form.message}`;
 
                         {/* upsells */}
                         <div className="mt-12">
-                            <h3 className="font-bold text-xl mb-4">Services & activities (à la carte)</h3>
+                            <h3 className="font-bold text-xl mb-4">{t.upsells.title}</h3>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {t.upsells.map((u, i) => (
+                                {t.upsells.items.map((u, i) => (
                                     <div key={i}
                                          className="flex items-center justify-between rounded-2xl border border-amber-200 dark:border-emerald-900 bg-white/80 dark:bg-black/40 px-4 py-3">
                                         <span className="text-slate-800 dark:text-slate-200">{u.t}</span>
@@ -1392,7 +1430,7 @@ Message: ${form.message}`;
                             {/* Challenge: human check */}
                             <label className="block sm:col-span-2">
                                 <span className="text-sm text-slate-700 dark:text-slate-300">
-                                  To confirm you are human, please type <strong>Ikniouen</strong>
+                                  {t.booking.confirmLabel} <strong>Ikniouen</strong>
                                 </span>
                                 <input
                                     type="text"
