@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
 import {GALLERY} from "./gallery";
 import {SUITES} from "./suites.js";
-import restauHero from "./assets/restau.png";
+import behindEntrance from "./assets/suites-frontdoor.png";
 import {PACKS} from "./packs.jsx";
 import RestaurantSection from "./components/RestaurantSection.jsx";
 import {
@@ -616,19 +616,19 @@ Message: ${form.message}`;
             <div
                 className="min-h-screen text-slate-900 dark:text-slate-100 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,.7),rgba(246,231,216,0))] dark:bg-[radial-gradient(ellipse_at_top,rgba(11,16,32,1),rgba(15,118,110,0.25))]">
                 {/* TOP DECOR — sky (light) / stars (dark) + full-bleed mountains */}
-                <div className="pointer-events-none select-none relative overflow-hidden">
-                    <div className="h-16 md:h-20 lg:h-24"/>
-                    {/* Light-mode sky */}
-                    <div
-                        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-0 block dark:hidden bg-gradient-to-b from-[#D9F0FF] via-[#ECF7FF] to-transparent"/>
-                    {/* Dark-mode stars */}
-                    <StarField
-                        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-10 hidden dark:block text-[#DDEBFF]"
-                        count={200}/>
-                    {/* Mountains */}
-                    <IconDunes
-                        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-20 text-[#917E64]/70 dark:text-[#5E5433]/70"/>
-                </div>
+                {/*<div className="pointer-events-none select-none relative overflow-hidden">*/}
+                {/*    <div className="h-16 md:h-20 lg:h-24"/>*/}
+                {/*    /!* Light-mode sky *!/*/}
+                {/*    <div*/}
+                {/*        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-0 block dark:hidden bg-gradient-to-b from-[#D9F0FF] via-[#ECF7FF] to-transparent"/>*/}
+                {/*    /!* Dark-mode stars *!/*/}
+                {/*    <StarField*/}
+                {/*        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-10 hidden dark:block text-[#DDEBFF]"*/}
+                {/*        count={200}/>*/}
+                {/*    /!* Mountains *!/*/}
+                {/*    <IconDunes*/}
+                {/*        className="absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] h-16 md:h-20 lg:h-24 z-20 text-[#917E64]/70 dark:text-[#5E5433]/70"/>*/}
+                {/*</div>*/}
 
                 {/* NAV */}
                 <header
@@ -790,7 +790,7 @@ Message: ${form.message}`;
                     {/* Animated background photo */}
                     <div className="absolute inset-0 -z-10">
                         <img
-                            src={restauHero}
+                            src={behindEntrance}
                             alt=""
                             loading="eager"
                             fetchpriority="high"
