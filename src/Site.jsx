@@ -628,6 +628,21 @@ export default function Site() {
         // Fallback
         return "en";
     });
+
+    useEffect(() => {
+        // Wait for the DOM to render, then handle hash scrolling
+        const hash = window.location.hash;
+        if (hash) {
+            const el = document.querySelector(hash);
+            if (el) {
+                // Use smooth scroll for a nicer feel
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 300); // small delay ensures the layout is stable
+            }
+        }
+    }, [lang]);
+
     const t = useMemo(() => LANG[lang], [lang]);
 
     const [season, setSeason] = useState("shoulder"); // default middle season
