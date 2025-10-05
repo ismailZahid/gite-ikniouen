@@ -1,4 +1,4 @@
-import garden2 from './assets/garden3.png';
+import romanticPromenade from './assets/romantic-premenade.png';
 import gardenPergola from './assets/garden-pergola.png';
 import gardenTent from './assets/garden-tent.png';
 import entrance from './assets/entrance.png';
@@ -23,10 +23,10 @@ export const GALLERY = [
         }
     },
     {
-        src: garden2, alt: 'Garden View', description: {
-            en: 'Garden View',
-            fr: 'Vue du jardin',
-            es: 'Vista del jardín'
+        src: romanticPromenade, alt: 'Romantic promenade', description: {
+            en: 'Romantic promenade',
+            fr: 'Promenade romantique',
+            es: 'Paseo romántico'
         }
     },
     {
