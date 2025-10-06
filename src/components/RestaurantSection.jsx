@@ -1,14 +1,13 @@
 import {useMemo} from "react";
-import restauBg from "../assets/restau.png"; // adjust path if needed
+import restauBg from "../assets/restau.png";
 import {IconLeaf, IconPalm, IconTagine} from "../icons";
-import {Link} from "react-router-dom";
 
 export default function RestaurantSection({lang = "en"}) {
     const texts = useMemo(() => ({
         en: {
             title: "Amazigh Terroir Cuisine",
             subtitle: "Slow-cooked meals, garden produce, and authentic mountain flavors.",
-            download: "Download Printable Menu",
+            download: "Download Menu",
             sections: {
                 starters: "Starters",
                 mains: "Main Courses",
@@ -22,7 +21,7 @@ export default function RestaurantSection({lang = "en"}) {
         fr: {
             title: "Cuisine du Terroir Amazigh",
             subtitle: "Plats mijotés, produits du jardin et saveurs authentiques de l’Anti-Atlas.",
-            download: "Télécharger le menu imprimable",
+            download: "Télécharger le menu",
             sections: {
                 starters: "Entrées",
                 mains: "Plats principaux",
@@ -36,7 +35,7 @@ export default function RestaurantSection({lang = "en"}) {
         es: {
             title: "Cocina del Terruño Amazigh",
             subtitle: "Comidas a fuego lento, productos del huerto y sabores auténticos del Anti-Atlas.",
-            download: "Descargar menú imprimible",
+            download: "Descargar la carta",
             sections: {
                 starters: "Entrantes",
                 mains: "Platos principales",
@@ -207,21 +206,21 @@ export default function RestaurantSection({lang = "en"}) {
                     <p className="mt-3 text-lg text-slate-700 dark:text-slate-300">{texts.subtitle}</p>
                 </div>
                 <div className="max-w-6xl mx-auto px-4 text-center mt-10">
-                    <Link
-                        to="/menu-print"
+                    <a
+                        href={`${import.meta.env.BASE_URL}menu-${lang}.pdf`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 mb-6 -mt-2
-                                  bg-gradient-to-r from-amber-700 to-amber-600
-                                  text-white font-semibold rounded-xl shadow-md
-                                  hover:from-amber-800 hover:to-amber-700 hover:scale-105
-                                  transition-transform duration-300 ease-out
-                                  border border-amber-900/30
-                                  dark:from-emerald-700 dark:to-emerald-600 dark:hover:from-emerald-800 dark:hover:to-emerald-700"
+                        download
+                        className="
+                          inline-flex items-center gap-2 px-6 py-3 mb-6 -mt-2
+                          bg-gradient-to-r from-amber-700 to-amber-600
+                          text-white font-semibold rounded-xl shadow-md
+                          hover:scale-105 transition-transform duration-300
+                        "
                     >
-                        <span className="text-lg">{"\uD83D\uDCDC"}</span>
-                        <span>{texts.download || "View or Download Full Menu (PDF)"}</span>
-                    </Link>
+                        <span className="text-lg">&#x1F4DC;</span>
+                        <span>{texts.download}</span>
+                    </a>
                 </div>
 
                 <div
